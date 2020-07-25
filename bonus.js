@@ -1,7 +1,9 @@
+// Creating function buildGauge
 function buildGauge(washes) {
     
     console.log(washes)
 
+  // Creating variable dataGauge
     var dataGauge = [
         {
             type: "scatter",
@@ -42,7 +44,7 @@ function buildGauge(washes) {
         },
       }
     ]
-
+      // Creating needle for gauge chart
       var degrees = 180 - (washes * 20)
       var radius = .5
       var radians = degrees * Math.PI / 180
@@ -56,6 +58,7 @@ function buildGauge(washes) {
       var pathEnd = " Z";
       var path = mainPath.concat(pathX, space, pathY, pathEnd);
   
+      // Creating variable gaugeLayout and modifying layout specifications  
       var gaugeLayout = {
         shapes: [{
           type: 'path',
@@ -79,6 +82,7 @@ function buildGauge(washes) {
         yaxis: {visible: false, range: [-1, 1]}
       }
   
+      // Plotting gauge chart
       Plotly.newPlot('gauge', dataGauge, gaugeLayout)
   
 }

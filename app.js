@@ -1,9 +1,11 @@
+// Creating function optionChanged for modifyCharts and buildMetadata
 function optionChanged(id) {
     
     modifyCharts(id);
     buildMetadata(id);
 }
 
+// Creating function modifyCharts to loop through samples.json and filter
 function modifyCharts(id) {
     
     d3.json("samples.json").then(data => {
@@ -11,6 +13,7 @@ function modifyCharts(id) {
         var samples = data.samples
         var sample  = samples.filter(sample => sample.id === id.toString())[0]
         
+        // Creating bar chart to display top 10 bacteria cultures
         var barX = sample.sample_values.slice(0,10).reverse()
         var barY = sample.otu_ids.slice(0,10).map(otuId => `OTU ${otuId}`).reverse()
         var bardata = [{
@@ -28,7 +31,7 @@ function modifyCharts(id) {
 
         Plotly.newPlot("bar", bardata, barLayout);
 
-        
+        // Creating bubble chart to display otu_ids and sample_values
         var bubbleData = [{
             x: sample.otu_ids,
             y: sample.sample_values,
@@ -64,6 +67,7 @@ function modifyCharts(id) {
     });
 };
 
+// Creating function buildMetadata to filter through test subject ID's
 function buildMetadata(id) {
     d3.json("samples.json").then(data => {
         var item = data.metadata.filter(obj => obj.id === parseInt(id))[0];
@@ -77,10 +81,12 @@ function buildMetadata(id) {
 
         })
         
+        // Adding buildGauge to buildMetadata function 
         buildGauge(item.wfreq);
     });
 }
 
+// Creating function init and mapping metadata ID's
 function init() {
     d3.json("samples.json").then(data => {
         var selector = d3.select("#selDataset")
@@ -100,6 +106,8 @@ function init() {
     });
 
 }
+
+// Initializing init function
 init()
 
 
